@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
+import 'package:prueba/class/blue.dart';
+import 'package:after_layout/after_layout.dart';
 
 bool switchValue = false;
 String dropdownValue = "ESP-32";
@@ -11,7 +15,23 @@ class Run extends StatefulWidget {
   State<Run> createState() => _RunState();
 }
 
-class _RunState extends State<Run> {
+class _RunState extends State<Run> with AfterLayoutMixin {
+  BlueDart? blue;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //VERIFICAR QUE EL DISPOSITIVO ESTE CONECTADO AL BLUETOOTH
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    //ELIMINAR EL OBJETO BLUETOOTH
+    //CERRAR LA CONEXIÓN BLUEEE
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -155,5 +175,11 @@ class _RunState extends State<Run> {
         ),
       )),
     );
+  }
+
+  @override
+  FutureOr<void> afterFirstLayout(BuildContext context) {
+    blue = BlueDart(context: context);
+    blue!.isConnect();
   }
 }
